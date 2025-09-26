@@ -1,0 +1,16 @@
+apiVersion: v2
+name: dummy-cronjob
+description: A Helm chart for a dummy CronJob that runs every 5 minutes
+type: application
+version: 0.1.0
+appVersion: "1.0"
+keywords:
+  - cronjob
+  - dummy
+  - scheduler
+home: https://example.com
+sources:
+  - https://github.com/example/dummy-cronjob
+maintainers:
+  - name: Platform Team
+    email: platform@example.com

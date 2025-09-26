@@ -1,0 +1,25 @@
+1. Your dummy CronJob has been deployed successfully!
+
+2. The CronJob is scheduled to run every 5 minutes with the schedule: {{ .Values.cronjob.schedule }}
+
+3. To check the status of your CronJob:
+   kubectl get cronjob {{ include "dummy-cronjob.fullname" . }} -n {{ .Release.Namespace }}
+
+4. To view the CronJob details:
+   kubectl describe cronjob {{ include "dummy-cronjob.fullname" . }} -n {{ .Release.Namespace }}
+
+5. To check the jobs created by the CronJob:
+   kubectl get jobs -l app.kubernetes.io/name={{ include "dummy-cronjob.name" . }} -n {{ .Release.Namespace }}
+
+6. To view the logs of the latest job:
+   kubectl logs -l job-name=$(kubectl get jobs -l app.kubernetes.io/name={{ include "dummy-cronjob.name" . }} -n {{ .Release.Namespace }} -o jsonpath='{.items[-1:].metadata.name}') -n {{ .Release.Namespace }}
+
+7. To manually trigger a job from the CronJob:
+   kubectl create job --from=cronjob/{{ include "dummy-cronjob.fullname" . }} manual-job-$(date +%s) -n {{ .Release.Namespace }}
+
+The dummy CronJob will execute the following command every 5 minutes:
+{{- range .Values.cronjob.command }}
+{{ . }}
+{{- end }}
+
+Happy scheduling! 🚀

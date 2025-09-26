@@ -1,0 +1,75 @@
+# Default values for dummy-cronjob chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+cronjob:
+  # CronJob schedule - runs every 5 minutes
+  schedule: "*/5 * * * *"
+  
+  # Job configuration
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Allow
+  restartPolicy: OnFailure
+  
+  # Container configuration
+  image:
+    repository: busybox
+    tag: "1.35"
+    pullPolicy: IfNotPresent
+  
+  # Command to execute (dummy command)
+  command:
+    - /bin/sh
+    - -c
+    - |
+      echo "Dummy CronJob started at $(date)"
+      echo "Running some dummy work..."
+      sleep 10
+      echo "Dummy work completed at $(date)"
+      echo "CronJob finished successfully"
+
+# Resource limits and requests
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# Node selector for scheduling
+nodeSelector: {}
+
+# Tolerations for node taints
+tolerations: []
+
+# Affinity rules
+affinity: {}
+
+# Security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 2000
+
+# Pod security context
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
+# Service account
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# Additional labels
+labels: {}
+
+# Additional annotations
+annotations: {}
